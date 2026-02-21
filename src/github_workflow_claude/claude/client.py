@@ -36,3 +36,18 @@ class ClaudeClient:
             messages=[{"role": "user", "content": prompt}]
         )
         return message.content[0].text
+
+    def summarize_text(self, text: str, max_words: int = 100) -> str:
+        """Summarize the given text using Claude.
+
+        Args:
+            text: The text to summarize.
+            max_words: Maximum number of words in the summary.
+
+        Returns:
+            A summarized version of the text.
+        """
+        prompt = f"Summarize the following text in {max_words} words:\n\n{text}"
+        response = self.generate_response(prompt)
+        words = response.split(" ")
+        return " ".join(words[:max_words - 1])
